@@ -3,27 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>127x127 Pixel Grid</title>
+    <title>127x127 Grid</title>
     <style>
         #grid {
             display: grid;
-            grid-template-columns: repeat(127, 8px);
-            gap: 1px;
+            grid-template-columns: repeat(127, 10px);
+            gap: 2px;
         }
         .cell {
-            width: 8px;
-            height: 8px;
-            background-color: white;
-            border: 1px solid lightgray;
+            width: 10px;
+            height: 10px;
             cursor: pointer;
-        }
-        .selected {
-            background-color: black; /* Default selected color */
         }
         #output {
             white-space: pre-wrap;
             font-family: monospace;
-            margin-top: 10px;
         }
     </style>
 </head>
@@ -40,17 +34,15 @@
         const gridSize = 127;
         const grid = document.getElementById("grid");
 
-        // Create grid
+        // Generate 127x127 grid of checkboxes
         for (let y = 0; y < gridSize; y++) {
             for (let x = 0; x < gridSize; x++) {
-                let cell = document.createElement("div");
-                cell.classList.add("cell");
-                cell.dataset.x = x;
-                cell.dataset.y = y;
-                cell.addEventListener("click", () => {
-                    cell.classList.toggle("selected");
-                });
-                grid.appendChild(cell);
+                let checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.classList.add("cell");
+                checkbox.dataset.x = x;
+                checkbox.dataset.y = y;
+                grid.appendChild(checkbox);
             }
         }
 
@@ -62,9 +54,9 @@
             }
 
             let output = "";
-            document.querySelectorAll(".selected").forEach(cell => {
-                let x = cell.dataset.x;
-                let y = cell.dataset.y;
+            document.querySelectorAll(".cell:checked").forEach(cb => {
+                let x = cb.dataset.x;
+                let y = cb.dataset.y;
                 output += `${x} ${y} ${color} 1\n`;
             });
 
